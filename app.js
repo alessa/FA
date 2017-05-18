@@ -1,5 +1,15 @@
+    var scribe = require('scribe-js')(); //loads Scribe
+
+    var console = process.console;
+
+
     var express = require('express');
     var app = express();
+
+    app.use(scribe.express.logger()); //Log each request
+    app.use('/logs', scribe.webPanel());
+
+
     var bodyParser = require('body-parser');
     var multer = require('multer');
     var uploader = require('./uploader/s3Uploader.js');
@@ -13,24 +23,22 @@
 
     /** Serving from the same express Server
     No cors required */
-      app.use(bodyParser.json());
+    app.use(bodyParser.json());
 
     // /** API path that will upload the files */
     app.post('/upload', function (req, res) {
 
-        var files = [].concat.apply(req.files.file || req.files.files);
-
         uploader.uploadFile(req, res, function (err) {
-              res.json({
+            res.json({
                 error_code: err ? 1 : 0,
-                err_desc: err 
+                err_desc: err
             });
             if (err) return;
 
-           var files = [].concat.apply(req.files.file || req.files.files);
-           uploader.s3UploadFiles(files, 'fa.tests');
+            var files = [].concat.apply(req.files.file || req.files.files);
+            uploader.s3UploadFiles(files, 'fa.tests');
 
-          
+
         });
     });
 
@@ -39,3 +47,4 @@
     app.listen('3000', function () {
         console.log('running on 3000...');
     });
+

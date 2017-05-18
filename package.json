@@ -18,6 +18,7 @@
     "regenerator-runtime": "^0.10.5"
   },
   "dependencies": {
+    "scribe-js":"2.0.4",
     "aws-sdk-mock":"1.7.0",
     "babel-jest": "20.0.3",
     "regenerator-runtime": "0.10.5",

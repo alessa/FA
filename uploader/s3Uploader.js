@@ -2,6 +2,7 @@ var fs = require('fs');
 var multer = require('multer');
 var aws = require('aws-sdk');
 
+var console = process.console;
 var configPath = './AwsConfig.json';
 
 if (fs.exists(configPath)) {
@@ -114,7 +115,7 @@ s3Uploader.prototype.s3UploadFile = function (bucket, fileBuffer, fileName, call
     Body: fileBuffer,
     ContentType: contentType
   }, function (error, response) {
-    console.log('uploaded file[' + fileName + '] to [' + bucket + '] as [' + contentType + ']');
+    console.info('uploaded file[' + fileName + '] to [' + bucket + '] as [' + contentType + ']');
     if (callback) callback(error, response);
   });
 
