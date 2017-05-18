@@ -1,3 +1,5 @@
 
-//curl -X POST -F file=@README.md http://localhost:3000/upload
-//curl -X POST -F files=@README.md -F files=@app.js http://localhost:3000/upload
+curl -X POST -F file=@README.md http://localhost:3000/upload
+curl -X POST -F files=@README.md -F files=@app.js http://localhost:3000/upload
+docker build -t firstasset .
+
