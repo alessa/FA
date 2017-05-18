@@ -25,9 +25,9 @@ class s3Uploader extends baseUploader {
   constructor() {
     super();
   }
-  write(data) {
-    this.emit('data', data);
-  }
+  // write(data) {
+  //   this.emit('data', data);
+  // }
 }
 
 // const uploader = new s3Uploader();
@@ -39,15 +39,6 @@ class s3Uploader extends baseUploader {
 
 var storage = multer.memoryStorage();
 
-s3Uploader.prototype.uploadFile = multer({ //multer settings
-  storage: storage
-}).fields([{
-  name: 'file',
-  maxCount: 100
-}, {
-  name: 'files',
-  maxCount: 100
-}]);
 
 function getContentTypeByFile(fileName) {
   var rc = 'application/octet-stream';
@@ -65,6 +56,15 @@ function getContentTypeByFile(fileName) {
 
 //---------------------------------------------------------------
 
+s3Uploader.prototype.uploadFile = multer({ //multer settings
+  storage: storage
+}).fields([{
+  name: 'file',
+  maxCount: 100
+}, {
+  name: 'files',
+  maxCount: 100
+}]);
 
 s3Uploader.prototype.getBucketList = function (path) {
   var s3 = new AWS.S3();
@@ -115,8 +115,7 @@ s3Uploader.prototype.s3UploadFile = function (bucket, fileBuffer, fileName, call
     ContentType: contentType
   }, function (error, response) {
     console.log('uploaded file[' + fileName + '] to [' + bucket + '] as [' + contentType + ']');
-    console.log(arguments);
-    if (callback) callback(error);
+    if (callback) callback(error, response);
   });
 
 
