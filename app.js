@@ -15,6 +15,7 @@
     var bodyParser = require('body-parser');
     var multer = require('multer');
     var uploader = require('./uploader/s3Uploader.js');
+    var manager = require('./users/userManager');
 
     app.use(function (req, res, next) { //allow cross origin requests
         res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
@@ -37,8 +38,16 @@
             });
             if (err) return;
 
+            var authKey = req.body['authKey'];
+            var user = manager.getUser(authKey);
+            var currentDate = new Date();
+            var objectPath = `${user.env}/${currentDate.getUTCFullYear()}_${currentDate.getUTCMonth()}_${currentDate.getUTCDay()}/`;
+            var requestMetadata = user;
+            requestMetadata.IP = req.ip;
+            requestMetadata.objectPath = objectPath;
+
             var files = [].concat.apply(req.files.file || req.files.files);
-            uploader.s3UploadFiles(files, 'fa.tests');
+            uploader.s3UploadFiles(files, user.bucket, objectPath , requestMetadata);
 
 
         });

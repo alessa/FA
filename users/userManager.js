@@ -59,6 +59,11 @@ class userManager {
         fs.writeFileSync(USERS_FILE, JSON.stringify(this.users))
         console.log(`userManager syncUserFile`);
     }
+
+    getBucket(authKey){
+        var user = this.getUser(authKey);
+        return user.bucket;
+    }
 }
 
 

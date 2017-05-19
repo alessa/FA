@@ -7,7 +7,7 @@ var aws = require('aws-sdk');
 var console = process.console;
 var configPath = './AwsConfig.json';
 
-if (fs.exists(configPath)) {
+if (fs.existsSync(configPath)) {
   aws.config.loadFromPath(configPath);
 } else {
   /**
@@ -93,18 +93,22 @@ s3Uploader.prototype.getFile = function (bucket, fileKey) {
   s3.getObject(params).createReadStream().pipe(file);
 }
 
-s3Uploader.prototype.s3UploadFiles = function (files, bucket) {
+s3Uploader.prototype.s3UploadFiles = function (files, bucket, objectPath, requestMetadata) {
   if (files) {
+    requestMetadata.files = [];
     for (var index = 0; index < files.length; index++) {
       var file = files[index];
-      this.s3UploadFile(bucket, file.buffer, file.originalname);
+      this.s3UploadFile(bucket, file.buffer, objectPath, file.originalname);
+      requestMetadata.files.push(file.originalname)
     }
+
+    this.s3UploadFile(bucket, JSON.stringify(requestMetadata), objectPath, "metadata.json");
   }
 
 }
 
 
-s3Uploader.prototype.s3UploadFile = function (bucket, fileBuffer, fileName, callback) {
+s3Uploader.prototype.s3UploadFile = function (bucket, fileBuffer, objectPath, fileName) {
 
   var contentType = getContentTypeByFile(fileName);
 
@@ -113,12 +117,12 @@ s3Uploader.prototype.s3UploadFile = function (bucket, fileBuffer, fileName, call
     // private | public-read | public-read-write | aws-exec-read | authenticated-read | bucket-owner-read | bucket-owner-full-control
     ACL: 'bucket-owner-full-control',
     Bucket: bucket,
-    Key: fileName,
+    Key: objectPath + fileName,
     Body: fileBuffer,
     ContentType: contentType
   }, function (error, response) {
-    console.info('uploaded file[' + fileName + '] to [' + bucket + '] as [' + contentType + ']');
-    if (callback) callback(error, response);
+    if (!error) console.info('uploaded file[' + fileName + '] to [' + bucket + objectPath + '] as [' + contentType + ']');
+    else console.error(error)
   });
 
 
