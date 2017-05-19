@@ -1,21 +1,24 @@
+---------------------APP DEMO -----------------------
+curl -X POST -F file=@README.md -F 'authKey=a34281cc-dbcb-4c68-9324-5d380e6cd8be' http://localhost:8080/upload
+curl -X POST -F file=@README.md -F files=@app.js -F 'authKey=a34281cc-dbcb-4c68-9324-5d380e6cd8be' http://localhost:8080/upload
 
-curl -X POST -F file=@README.md http://localhost:8080/upload
-curl -X POST -F files=@README.md -F files=@app.js http://localhost:8080/upload
-
-
+---------------------APP LOGS -----------------------
 http://localhost:8080/logs/#/
 
+---------------------APP USER MANAGEMENT -----------------------
  node ./users/usersCommandline.js -h
 
+
+---------------------APP DOCKER -----------------------
 docker build -t firstasset .
 docker images
 docker run -p 49160:8080 -d firstasset
 docker ps
 docker logs [container_id]
 docker exec -it [container_id] /bin/bash
-    curl -X POST -F file=@README.md http://localhost:8080/upload
+    curl -X POST -F file=@README.md -F files=@app.js -F 'authKey=a34281cc-dbcb-4c68-9324-5d380e6cd8be' http://localhost:8080/upload
     exit
-curl -X POST -F file=@README.md http://localhost:49160/upload
+curl -X POST -F file=@README.md -F files=@app.js -F 'authKey=a34281cc-dbcb-4c68-9324-5d380e6cd8be' http://localhost:8080/upload
 curl -i localhost:49160
 docker stop CONTAINER [container_id]
 

@@ -41,7 +41,7 @@
             var authKey = req.body['authKey'];
             var user = manager.getUser(authKey);
             var currentDate = new Date();
-            var objectPath = `${user.env}/${currentDate.getUTCFullYear()}_${currentDate.getUTCMonth()}_${currentDate.getUTCDay()}/`;
+            var objectPath = `${user.env}/${currentDate.getUTCFullYear()}_${currentDate.getUTCMonth()}_${currentDate.getUTCDay()}_${currentDate.getUTCHours()}/`;
             var requestMetadata = user;
             requestMetadata.IP = req.ip;
             requestMetadata.objectPath = objectPath;

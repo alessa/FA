@@ -121,7 +121,7 @@ s3Uploader.prototype.s3UploadFile = function (bucket, fileBuffer, objectPath, fi
     Body: fileBuffer,
     ContentType: contentType
   }, function (error, response) {
-    if (!error) console.info('uploaded file[' + fileName + '] to [' + bucket + objectPath + '] as [' + contentType + ']');
+    if (!error) console.info('uploaded file[' + fileName + '] to [' + bucket + "/" + objectPath + '] as [' + contentType + ']');
     else console.error(error)
   });
 
