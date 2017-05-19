@@ -1,5 +1,27 @@
 
-curl -X POST -F file=@README.md http://localhost:3000/upload
-curl -X POST -F files=@README.md -F files=@app.js http://localhost:3000/upload
+curl -X POST -F file=@README.md http://localhost:8080/upload
+curl -X POST -F files=@README.md -F files=@app.js http://localhost:8080/upload
+
+
+http://localhost:8080/logs/#/
+
+ set DOCKER_CERT_PATH=%USERPROFILE%\.docker\machine\machines\default
+ set DOCKER_HOST=tcp://192.168.99.100:2376
+ set DOCKER_MACHINE_NAME=default
+ set DOCKER_TLS_VERIFY=1
+
+
 docker build -t firstasset .
+docker images
+docker run -p 49160:8080 -d firstasset
+docker ps
+docker logs [container_id]
+docker exec -it [container_id] /bin/bash
+    curl -X POST -F file=@README.md http://localhost:8080/upload
+    exit
+curl -X POST -F file=@README.md http://localhost:49160/upload
+curl -i localhost:49160
+docker stop CONTAINER [container_id]
+
+
 

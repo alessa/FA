@@ -1,3 +1,5 @@
+// "use strict";
+// import fs from 'fs';
 var fs = require('fs');
 var multer = require('multer');
 var aws = require('aws-sdk');

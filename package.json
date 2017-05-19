@@ -19,16 +19,22 @@
     "regenerator-runtime": "^0.10.5"
   },
   "dependencies": {
-    "scribe-js":"2.0.4",
-    "aws-sdk-mock":"1.7.0",
-    "babel-jest": "20.0.3",
-    "regenerator-runtime": "0.10.5",
-    "jest": "20.0.3",
-    "body-parser": "1.14.1",
+    "Faker": "^0.7.2",
     "aws-sdk": "2.x",
+    "aws-sdk-mock": "1.7.0",
+    "babel-jest": "20.0.3",
+    "body-parser": "1.14.1",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.9.0",
     "express": "4.13.3",
     "fs": "0.0.2",
-    "multer": "1.1.0"
+    "jest": "20.0.3",
+    "lodash": "^4.17.4",
+    "multer": "1.1.0",
+    "node-uuid": "^1.4.8",
+    "regenerator-runtime": "0.10.5",
+    "scribe-js": "2.0.4"
   },
   "engines": {
     "node": "0.10.x",

@@ -1,4 +1,3 @@
-const sum = require('../uploader/s3Uploader');
 var AWS = require('aws-sdk-mock');
 var uploader = require('../uploader/s3Uploader.js');
 var fs = require('fs');
